@@ -1,0 +1,26 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Build artifacts
+dist/
+build/
+
+# IDE / editor
+.DS_Store
+*.swp
+*.swo
+
+# Claude Code session data
+.claude/
+
+# Runtime state (stored in home dir, not repo)
+.task_reminder_state.json
