@@ -36,9 +36,12 @@ You may need to grant **Automation** permission to your terminal (or the app) in
 
 ## Usage
 
+### Starting the app
+
 ```bash
+cd task-reminder
 source .venv/bin/activate
-task-reminder
+task-reminder &
 ```
 
 The app appears as 📋 in your menu bar. Click it to:
@@ -47,6 +50,14 @@ The app appears as 📋 in your menu bar. Click it to:
 - Send a test notification
 - Trigger a reminder immediately
 - Quit
+
+### Killing the app
+
+Click **Quit** in the menu bar popup, or run:
+
+```bash
+pkill -f task_reminder
+```
 
 ## Task categorization
 

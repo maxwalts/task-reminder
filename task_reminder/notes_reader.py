@@ -64,11 +64,23 @@ class NotesHTMLParser(HTMLParser):
         self.in_div = False
         self.in_h1 = False
         self.current_text = ""
+        self.current_li_completed = False
 
     def handle_starttag(self, tag, attrs):
+        attrs_dict = dict(attrs)
         if tag == "li":
             self.in_li = True
             self.current_text = ""
+            li_class = attrs_dict.get("class", "").lower()
+            li_style = attrs_dict.get("style", "").lower()
+            self.current_li_completed = (
+                any(word in li_class for word in ["done", "checked", "completed", "struck"]) or
+                "line-through" in li_style
+            )
+        elif tag == "span" and self.in_li:
+            span_style = attrs_dict.get("style", "").lower()
+            if "line-through" in span_style:
+                self.current_li_completed = True
         elif tag == "div":
             self.in_div = True
             self.current_text = ""
@@ -81,7 +93,8 @@ class NotesHTMLParser(HTMLParser):
             self.in_li = False
             text = self.current_text.strip()
             # Skip "meta" section (reflections/notes to self, not tasks)
-            if text and self.current_section != "meta":
+            # and skip completed checklist items
+            if text and self.current_section != "meta" and not self.current_li_completed:
                 self.tasks.append(Task(
                     text=text,
                     section=self.current_section,
