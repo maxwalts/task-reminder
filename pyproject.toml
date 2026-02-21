@@ -12,6 +12,7 @@ license = {text = "MIT"}
 dependencies = [
     "rumps>=0.4.0",
     "pync>=2.0.0",
+    "blackboxprotobuf>=1.0.1",
 ]
 
 [project.scripts]
